@@ -13,6 +13,10 @@ app.get("/a", function(req, res, next){
     res.send("otra ruta")
 })
 
+app.get("/test", function(req, res, next){
+    res.send("Test")
+})
+
 app.use('/api/personas', personasRouter);
 
 app.listen(port, () => {
