@@ -17,6 +17,10 @@ app.get("/test", function(req, res, next){
     res.send("Test")
 })
 
+app.get("/test2", function(req, res, next){
+    res.send("Test 2")
+})
+
 app.use('/api/personas', personasRouter);
 
 app.listen(port, () => {
