@@ -13,4 +13,8 @@ router.get('/:id', function(req, res, next){
     res.send(`Ruta de persona id ${req.params.id}`);
 });
 
+router.get('/test', function(req, res, next){
+    res.send(`Test`);
+});
+
 module.exports = router;
