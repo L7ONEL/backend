@@ -1,8 +1,5 @@
 const express = require('express');
-const personasRouter = require('./api/personas')
-const marcaRouter = require('./api/marca')
-const autoRouter = require('./api/auto')
-const obtenerRouter = require('./api/obtener')
+const apiRouter = require('./api/main')
 
 const app = express();
 
@@ -18,13 +15,7 @@ app.get("/a", function(req, res, next){
     res.send("otra ruta")
 })
 
-app.use('/api/personas', personasRouter);
-
-app.use('/api/marca', marcaRouter);
-
-app.use('/api/auto', autoRouter);
-
-app.use('/api/obtener', obtenerRouter);
+app.use('/api', apiRouter);
 
 app.listen(port, () => {
     console.log(`Ejecutando servidor ${port}`);
