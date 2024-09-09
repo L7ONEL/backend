@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const {hashPass, verificarPass} = require('@damianegreco/hashpass');
-const {conexion} = require('../db/conexion')
+const {hashPass, verificarPass, generarToken, verificarToken} = require('@damianegreco/hashpass');
+const {conexion} = require('../db/conexion');
+
+const TOKEN_SECRET = "46334386";
 
 const checkUsuario = function(user){
     return new Promise((resolve, reject) => {
@@ -42,8 +44,27 @@ router.post('/', function(req, res, next){
 
 router.post('/login', function(req, res, next){
     const {user, pass} = req.body;
-
-    res.json({status: "En proceso"});
+    //JWT
+    const sql = 'SELECT id, pass FROM usuarios WHERE user = ?';
+    conexion.query(sql, [user], function(error, result){
+        if (error) {
+            return res.json({status: 'error', error})
+        } else {
+            if (result.length === 0) {
+                console.log("Usuario no existe.");
+                return res.json({status: 'error', error: "Usuario no existe."})
+            } else {
+                if (verificarPass(pass, result[0].pass)) {
+                    const token = generarToken(TOKEN_SECRET, 6, { usuario_id: result[0].id, usuario: user });
+                    console.log(token);
+                    res.json({status: 'ok', token})
+                } else {
+                    console.log("Usuario/contraseña incorrecto.");
+                    return res.json({status: 'error', error: "Usuario/contraseña incorrecto."})
+                }
+            }
+        }
+    })
 })
 
 module.exports = router
