@@ -13,7 +13,7 @@
     "nodemon": "^3.1.4"
   },
   "dependencies": {
-    "@damianegreco/hashpass": "^1.0.0",
+    "@damianegreco/hashpass": "^2.0.0",
     "express": "^4.19.2",
     "mysql": "^2.18.1"
   }
